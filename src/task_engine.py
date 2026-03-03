@@ -8,9 +8,18 @@ class TaskEngine:
         return "Resumo placeholder."
 
     def extract_tasks(self, text: str) -> list:
-        return [
-            {"title": "Tarefa placeholder", "priority": "Média"}
-        ]
+        prompt = f"""
+        Gere um resumo executivo empresarial para o seguinte texto:
+
+        {text}
+
+        O resumo deve incluir:
+        - Pontos-chave
+        - Riscos
+        - Oportunidades
+        - Próximos passos recomendados
+        """
+        return self.ai.generate(prompt)
 
     def generate_action_plan(self, text: str) -> dict:
         return {
