@@ -1,14 +1,16 @@
-# Responsável por comunicar com a OpenAI
-
+from openai import OpenAI
 from src.config import settings
 
 class AIClient:
     def __init__(self):
-        self.api_key = settings.OPENAI_API_KEY
+        self.client = OpenAI(api_key=settings.OPENAI_API_KEY)
 
     def generate(self, prompt: str) -> str:
         """
-        Função placeholder.
-        Depois você implementa a chamada real para a OpenAI.
+        Envia um prompt e retorna a resposta textual.
         """
-        return "Resposta fictícia da IA (placeholder)."
+        response = self.client.chat.completions.create(
+            model="gpt-4o-mini",
+            messages=[{"role": "user", "content": prompt}]
+        )
+        return response.choices[0].message["content"]
