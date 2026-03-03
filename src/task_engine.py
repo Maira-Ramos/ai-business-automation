@@ -9,17 +9,27 @@ class TaskEngine:
 
     def extract_tasks(self, text: str) -> list:
         prompt = f"""
-        Gere um resumo executivo empresarial para o seguinte texto:
+        A partir do texto abaixo, extraia tarefas estruturadas no formato JSON:
 
+        Texto:
         {text}
 
-        O resumo deve incluir:
-        - Pontos-chave
-        - Riscos
-        - Oportunidades
-        - Próximos passos recomendados
+        Cada tarefa deve conter:
+        - title
+        - priority (Alta, Média, Baixa)
+        - department (Financeiro, RH, Comercial, TI, Jurídico etc.)
+        - due (data sugerida ou null)
+
+        Responda SOMENTE com JSON.
         """
-        return self.ai.generate(prompt)
+
+        response = self.ai.generate(prompt)
+
+        import json
+        try:
+            return json.loads(response)
+        except:
+            return [{"title": "Erro ao processar IA", "priority": "Média"}]
 
     def generate_action_plan(self, text: str) -> dict:
         return {
