@@ -32,12 +32,22 @@ class TaskEngine:
             return [{"title": "Erro ao processar IA", "priority": "Média"}]
 
     def generate_action_plan(self, text: str) -> dict:
-        return {
-            "what": "Placeholder",
-            "why": "Placeholder",
-            "who": "Placeholder",
-            "when": "Placeholder",
-            "where": "Placeholder",
-            "how": "Placeholder",
-            "how_much": "Placeholder",
-        }
+       prompt = """
+       Gere um plano de ação 5W2H baseado no texto abaixo.
+
+       Ressponda em JSON no formato:
+       {{
+       "what": "",
+       "why": "",
+       "who": "",
+       "when": "",
+       "where": "",
+       "how": "",
+       "how_much": ""
+       }}
+
+       Texto:
+       {text}
+       """
+       import json
+       return json.loads(self.ai.generate(prompt))
