@@ -2,9 +2,13 @@ from pydantic_settings import BaseSettings, SettingsConfigDict
 
 
 class Settings(BaseSettings):
-    openai_api_key: str
+    ai_provider: str = "gemini"
 
-    model: str = "gpt-5"
+    openai_api_key: str = ""
+
+    gemini_api_key: str = ""
+
+    model_name: str = "gemini-2.5-flash"
 
     temperature: float = 0.2
 
