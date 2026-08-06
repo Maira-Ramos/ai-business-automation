@@ -8,6 +8,10 @@ from ai_business_automation.application.prompts.document_analysis_prompt import 
     DocumentAnalysisPrompt,
 )
 
+from ai_business_automation.application.parsers.analysis_result_parser import (
+    AnalysisResultParser,
+)
+
 class AnalyzeDocumentStep(WorkflowStep):
 
     def __init__(self, ai_service: AIService):
@@ -25,6 +29,6 @@ class AnalyzeDocumentStep(WorkflowStep):
 
         response = self.ai_service.generate(prompt)
 
-        context.analysis = AnalysisResult(
-            summary=response.content
+        context.analysis = AnalysisResultParser.parse(
+            response.content
         )
