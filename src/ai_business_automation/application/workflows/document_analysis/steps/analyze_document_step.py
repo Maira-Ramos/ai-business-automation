@@ -4,6 +4,9 @@ from ai_business_automation.core.workflow.context import WorkflowContext
 from ai_business_automation.application.services.ai_service import AIService
 from ai_business_automation.domain.entities.analysis_result import AnalysisResult
 
+from ai_business_automation.application.prompts.document_analysis_prompt import (
+    DocumentAnalysisPrompt,
+)
 
 class AnalyzeDocumentStep(WorkflowStep):
 
@@ -18,23 +21,7 @@ class AnalyzeDocumentStep(WorkflowStep):
 
         document = context.document
 
-        prompt = f"""
-Analise o documento abaixo.
-
-Nome:
-{document.name}
-
-Conteúdo:
-{document.content}
-
-Gere uma análise contendo:
-
-- resumo
-- decisões encontradas
-- tarefas identificadas
-- riscos
-- próximos passos
-"""
+        prompt = DocumentAnalysisPrompt.build(document)
 
         response = self.ai_service.generate(prompt)
 
